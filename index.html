@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AcademiaHub · Academy Management</title>
+  <!-- Tailwind via CDN + basic custom CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <link rel="stylesheet" href="style/style.css">
+  <!-- Font Awesome for simple icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* minimal custom style for smooth transitions */
+    .sidebar-transition { transition: transform 0.2s ease-in-out; }
+    .modal-fade { transition: opacity 0.2s ease; }
+    .toast-slide { animation: slideIn 0.2s ease-out; }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .card-hover { transition: box-shadow 0.15s; }
+    .card-hover:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    .dark .card-hover:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+  </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans antialiased">
+
+  <!-- ===== LOGIN PAGE ===== -->
+  <div id="loginPage" class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-8 space-y-6">
+      <div class="text-center">
+        <div class="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md">
+          <i class="fas fa-graduation-cap text-4xl text-white"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">AcademiaHub</h1>
+        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Academy Management System</p>
+      </div>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Username</label>
+          <input type="text" id="username" value="admin" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="admin">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Password</label>
+          <input type="password" id="password" value="admin123" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="••••••••">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition shadow-md">
+          <i class="fas fa-sign-in-alt mr-2"></i>Login
+        </button>
+      </form>
+      <div class="text-xs text-center text-gray-400 dark:text-gray-500 border-t pt-4 dark:border-gray-700">
+        <p>Demo: admin/admin123 · teacher/teacher123 · reception/reception123</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN APPLICATION ===== -->
+  <div id="app" class="hidden min-h-screen flex">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar-transition fixed inset-y-0 left-0 md:sticky md:top-0 md:h-screen w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col z-30 transform -translate-x-full md:translate-x-0">
+      <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center space-x-3">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <i class="fas fa-graduation-cap text-white text-sm"></i>
+        </div>
+        <span class="text-lg font-bold text-gray-800 dark:text-white">AcademiaHub</span>
+      </div>
+      <nav id="sidebarNav" class="flex-1 p-3 space-y-1 overflow-y-auto">
+        <!-- Dynamic menu from app.js -->
+      </nav>
+      <div class="p-3 border-t border-gray-200 dark:border-gray-700">
+        <button id="logoutBtn" class="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition">
+          <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Overlay for mobile -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/30 z-20 hidden md:hidden"></div>
+
+    <!-- Main column -->
+    <div class="flex-1 min-w-0 flex flex-col min-h-screen">
+      <!-- Topbar -->
+      <header id="topbar" class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+        <div class="flex items-center space-x-3">
+          <button id="menuToggle" class="md:hidden text-gray-600 dark:text-gray-300 text-xl">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h2 id="pageTitle" class="text-lg font-semibold text-gray-800 dark:text-white">Dashboard</h2>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button id="darkModeToggle" class="text-gray-600 dark:text-gray-300 text-xl" title="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="flex items-center space-x-2">
+            <span id="userBadge" class="text-sm font-medium hidden sm:inline text-gray-700 dark:text-gray-300"></span>
+            <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+              <i class="fas fa-user text-blue-600 dark:text-blue-300 text-sm"></i>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <section id="content" class="flex-1 min-w-0 p-3 sm:p-4 md:p-6 overflow-x-hidden bg-gray-50 dark:bg-gray-900"></section>
+    </div>
+  </div>
+
+  <!-- Modal container -->
+  <div id="modalContainer"></div>
+  <!-- Toast container -->
+  <div id="toastContainer" class="fixed top-4 right-4 z-50 space-y-2 w-80 max-w-full"></div>
+
+  <!-- Main module script -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

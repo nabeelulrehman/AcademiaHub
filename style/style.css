@@ -1,0 +1,186 @@
+/* ============================================
+   style.css — Small custom additions
+   ============================================ */
+
+/* Smooth scrolling & base */
+html { scroll-behavior: smooth; }
+
+/* Form input base (used inside modals) */
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: transparent;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+.dark .input {
+  border-color: #4b5563;
+  color: #e5e7eb;
+}
+.dark .input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+
+/* Sidebar active item (optional) */
+.navItem.active {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+.dark .navItem.active {
+  background-color: rgba(30, 64, 175, 0.25);
+  color: #93c5fd;
+}
+
+/* Table scroll hint on mobile */
+.overflow-x-auto { -webkit-overflow-scrolling: touch; }
+
+#pendingFeeTable .overflow-x-auto { overflow-x: visible; }
+#pendingFeeTable table { width: 100%; table-layout: fixed; font-size: 0.75rem; }
+#pendingFeeTable th, #pendingFeeTable td { padding: 0.4rem; white-space: normal; overflow-wrap: anywhere; }
+#pendingFeeTable th:nth-child(1) { width: 8%; }
+#pendingFeeTable th:nth-child(2) { width: 18%; }
+#pendingFeeTable th:nth-child(3) { width: 8%; }
+#pendingFeeTable th:nth-child(4) { width: 8%; }
+#pendingFeeTable th:nth-child(5) { width: 12%; white-space: nowrap; }
+#pendingFeeTable th:nth-child(6), #pendingFeeTable th:nth-child(8) { width: 9%; }
+#pendingFeeTable th:nth-child(7), #pendingFeeTable th:nth-child(9) { width: 8%; }
+#pendingFeeTable th:nth-child(10) { width: 10%; }
+@media screen and (max-width: 640px) {
+  #pendingFeeTable .overflow-x-auto { overflow: visible; }
+  #pendingFeeTable table, #pendingFeeTable tbody { display: block; width: 100%; }
+  #pendingFeeTable thead { display: none; }
+  #pendingFeeTable tbody tr { display: block; padding: 0.5rem 0.75rem; border-bottom: 1px solid #e5e7eb; }
+  .dark #pendingFeeTable tbody tr { border-color: #374151; }
+  #pendingFeeTable tbody td { display: flex; justify-content: space-between; gap: 0.75rem; width: 100%; padding: 0.3rem 0; text-align: right; }
+  #pendingFeeTable tbody td::before { content: attr(data-label); flex: 0 0 44%; color: #6b7280; font-weight: 500; text-align: left; }
+  #pendingFeeTable tbody td[data-label="Student / guardian contact"] { display: block; text-align: left; }
+  #pendingFeeTable tbody td[data-label="Student / guardian contact"]::before { display: block; margin-bottom: 0.2rem; }
+  #pendingFeeTable tbody td[data-label="Actions"] { justify-content: flex-end; }
+  #pendingFeeTable tbody td[data-label="Actions"]::before { display: none; }
+  #pendingFeeTable tbody td[colspan] { display: block; text-align: center; }
+  #pendingFeeTable tbody td[colspan]::before { content: none; }
+}
+
+  #reportContent .overflow-x-auto { overflow-x: visible; }
+  #reportContent table { width: 100%; table-layout: fixed; font-size: 0.7rem; }
+  #reportContent th, #reportContent td { padding: 0.35rem 0.25rem; white-space: normal; overflow-wrap: anywhere; }
+  #reportContent th:nth-child(1) { width: 7%; }
+  #reportContent th:nth-child(2) { width: 13%; }
+  #reportContent th:nth-child(3) { width: 6%; }
+  #reportContent th:nth-child(4) { width: 13%; }
+  #reportContent th:nth-child(5), #reportContent th:nth-child(8), #reportContent th:nth-child(10) { width: 8%; }
+  #reportContent th:nth-child(6), #reportContent th:nth-child(7), #reportContent th:nth-child(9) { width: 6%; }
+  #reportContent th:nth-child(11) { width: 8%; }
+  #reportContent th:nth-child(12) { width: 9%; }
+  #reportContent .salary-pay-button { padding: 0.375rem 0.625rem; font-size: 0.75rem; line-height: 1rem; }
+  @media screen and (max-width: 900px) {
+    #reportContent .overflow-x-auto { overflow: visible; }
+    #reportContent table, #reportContent tbody { display: block; width: 100%; }
+    #reportContent thead { display: none; }
+    #reportContent tbody tr { display: block; padding: 0.5rem 0.75rem; border-bottom: 1px solid #e5e7eb; }
+    .dark #reportContent tbody tr { border-color: #374151; }
+    #reportContent tbody td { display: flex; justify-content: space-between; gap: 0.75rem; width: 100%; padding: 0.3rem 0; text-align: right; }
+    #reportContent tbody td::before { content: attr(data-label); flex: 0 0 44%; color: #6b7280; font-weight: 500; text-align: left; }
+    #reportContent tbody td[data-label="Per subject"] { display: block; text-align: left; }
+    #reportContent tbody td[data-label="Per subject"]::before { display: block; margin-bottom: 0.2rem; }
+    #reportContent tbody td[data-label="Actions"] { justify-content: flex-end; }
+    #reportContent tbody td[data-label="Actions"]::before { display: none; }
+    #reportContent tbody td[colspan] { display: block; text-align: center; }
+    #reportContent tbody td[colspan]::before { content: none; }
+  }
+
+  .receipt-sheet {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #111827;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+}
+.receipt-header { position: relative; text-align: center; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb; }
+.receipt-header h2 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+.receipt-header p { margin: 0.25rem 0 0; color: #6b7280; }
+.receipt-type { display: inline-block; margin-top: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; }
+.receipt-demo .receipt-type { color: #92400e; background: #fef3c7; border: 1px dashed #d97706; }
+.receipt-original .receipt-type { color: #065f46; background: #d1fae5; border: 1px solid #059669; }
+.receipt-meta, .receipt-student { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1.5rem; padding: 1rem 0; border-bottom: 1px solid #e5e7eb; }
+.receipt-meta div, .receipt-student div { display: flex; justify-content: space-between; gap: 0.75rem; }
+.receipt-meta span, .receipt-student span { color: #6b7280; }
+.receipt-student h3, .receipt-fees h3 { grid-column: 1 / -1; margin: 0; font-size: 0.9rem; font-weight: 700; }
+.receipt-fees { padding: 1rem 0; }
+.receipt-sheet table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.receipt-sheet th, .receipt-sheet td { padding: 0.5rem; border: 1px solid #e5e7eb; text-align: left; }
+.receipt-sheet th { background: #f3f4f6; font-weight: 700; }
+.receipt-sheet .text-right { text-align: right; }
+.receipt-totals { width: min(100%, 26rem); margin: 0 0 0 auto; padding-top: 0.75rem; border-top: 2px solid #e5e7eb; }
+.receipt-total-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.35rem 0; }
+.receipt-footer { margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid #e5e7eb; color: #6b7280; text-align: center; font-size: 0.75rem; }
+@media screen and (max-width: 640px) {
+  .receipt-sheet { padding: 1rem; border-radius: 0; }
+  .receipt-meta, .receipt-student { grid-template-columns: minmax(0, 1fr); }
+  .receipt-sheet table { min-width: 34rem; }
+}
+
+/* Print styles for receipts & reports */
+@media print {
+  @page { size: A4 portrait; margin: 12mm; }
+  body { background: #fff !important; }
+  body * { visibility: hidden; }
+  #modalContainer, #modalOverlay, #modalOverlay > div, #modalOverlay .p-5 {
+    position: static !important;
+    display: block !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  #receiptContent, #receiptContent *,
+  #reportContent, #reportContent * {
+    visibility: visible;
+  }
+  #receiptContent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 10pt;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  #reportContent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+.dark .input { background: #374151; }
+.dark select.input option { background: #1f2937; }
+.input:disabled { opacity: .6; cursor: not-allowed; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+@media print { .no-print { display: none !important; } }
