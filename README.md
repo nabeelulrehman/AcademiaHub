@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AcademiaHub — Academy Management System (browser-based demo)
 
 HTML + Tailwind CSS (CDN) + vanilla JavaScript ES modules. All academy demo data, including teacher-subject salaries, finalized monthly payroll and payment history, is stored in browser localStorage. This demo does not require a database or backend API.
@@ -30,3 +31,6 @@ An internet connection is needed for the Tailwind and Font Awesome CDNs.
 
 ## ⚠️ Demo data note
 Teacher data, salaries, payments, and permissions are demo-only and stored in localStorage. Browser storage is not a secure financial system and is scoped to the current browser and origin. Do not enter real personal data or use this demo as a production payroll system.
+=======
+# AcademiaHub
+>>>>>>> d40e307272df5591d80dae437a554ac25ae0c904
