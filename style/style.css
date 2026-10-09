@@ -43,6 +43,14 @@ html { scroll-behavior: smooth; }
 /* Table scroll hint on mobile */
 .overflow-x-auto { -webkit-overflow-scrolling: touch; }
 
+#subjectManagementTable table { width: 100%; min-width: 68rem; table-layout: fixed; }
+#subjectManagementTable th, #subjectManagementTable td { padding-left: 0.75rem; padding-right: 0.75rem; }
+#subjectManagementTable th:nth-child(1) { width: 24%; }
+#subjectManagementTable th:nth-child(2) { width: 18%; }
+#subjectManagementTable th:nth-child(3) { width: 28%; }
+#subjectManagementTable th:nth-child(4) { width: 14%; }
+#subjectManagementTable th:nth-child(5) { width: 16%; text-align: center; }
+
 #pendingFeeTable .overflow-x-auto { overflow-x: visible; }
 #pendingFeeTable table { width: 100%; table-layout: fixed; font-size: 0.75rem; }
 #pendingFeeTable th, #pendingFeeTable td { padding: 0.4rem; white-space: normal; overflow-wrap: anywhere; }

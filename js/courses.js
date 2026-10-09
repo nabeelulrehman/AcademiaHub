@@ -21,23 +21,48 @@ function semesterLabel(value) {
 function labelOf(course) {
   return `${course.subjectName || course.name} ${contextOf(course)}`;
 }
+function subjectOrder(course) {
+  const levelOrder = { Matric: 0, Inter: 1, BS: 2 };
+  const level = course.academicLevel || classRecord(course.programName || course.className)?.academicLevel || "";
+  let className = course.className || "";
+  if (level === "Inter") {
+    className = className.replace(/^11th\s+Class$/i, "1st Year").replace(/^12th\s+Class$/i, "2nd Year");
+  }
+  const classIndex = (schoolClasses[level] || []).indexOf(className);
+  return {
+    level: levelOrder[level] ?? 3,
+    assignment: classIndex >= 0 ? classIndex : level === "BS" ? Number(course.semester) || 0 : Number.MAX_SAFE_INTEGER,
+    program: level === "BS" ? (course.programName || course.className || "") : "",
+    subject: course.subjectName || course.name || ""
+  };
+}
+function compareSubjects(a, b) {
+  const first = subjectOrder(a), second = subjectOrder(b);
+  return first.level - second.level
+    || first.program.localeCompare(second.program)
+    || first.assignment - second.assignment
+    || first.subject.localeCompare(second.subject);
+}
 
 function subjectRows(list) {
   return list.map(course => `<tr class="border-b dark:border-gray-700">
     <td class="${TD} font-medium">${esc(course.subjectName || course.name)}</td>
     <td class="${TD}">${esc(course.academicLevel || classRecord(course.programName || course.className)?.academicLevel || "Unassigned")}</td>
     <td class="${TD}">${esc(contextOf(course))}</td><td class="${TD}">${money(course.fee)}</td>
-    <td class="${TD} text-right whitespace-nowrap"><button onclick="editCourse('${esc(course.id)}')" title="Edit subject" class="text-amber-600 mr-2"><i class="fas fa-edit"></i></button>
-    <button onclick="toggleCourseStatus('${esc(course.id)}')" title="${course.status === "Active" ? "Deactivate" : "Activate"}" class="text-blue-600 mr-2"><i class="fas ${course.status === "Active" ? "fa-toggle-on" : "fa-toggle-off"}"></i></button>
-    <button onclick="deleteCourse('${esc(course.id)}')" title="Delete subject" class="text-red-600"><i class="fas fa-trash"></i></button></td></tr>`).join("");
+    <td class="${TD} text-center whitespace-nowrap"><div class="flex items-center justify-center gap-4">
+      <button onclick="editCourse('${esc(course.id)}')" title="Edit subject" class="text-amber-600"><i class="fas fa-edit"></i></button>
+      <button onclick="toggleCourseStatus('${esc(course.id)}')" title="${course.status === "Active" ? "Deactivate" : "Activate"}" class="text-blue-600"><i class="fas ${course.status === "Active" ? "fa-toggle-on" : "fa-toggle-off"}"></i></button>
+      <button onclick="deleteCourse('${esc(course.id)}')" title="Delete subject" class="text-red-600"><i class="fas fa-trash"></i></button>
+    </div></td></tr>`).join("");
 }
 function assignmentOptions() {
-  return [...new Set(assignments().map(contextOf).filter(value => value !== "Unassigned"))].sort();
+  return [...new Set(assignments().slice().sort(compareSubjects).map(contextOf).filter(value => value !== "Unassigned"))];
 }
 function filteredSubjects() {
   return assignments().filter(course => (!filters.search || labelOf(course).toLowerCase().includes(filters.search.toLowerCase()))
     && (!filters.level || course.academicLevel === filters.level)
-    && (!filters.assignment || contextOf(course) === filters.assignment));
+    && (!filters.assignment || contextOf(course) === filters.assignment))
+    .sort(compareSubjects);
 }
 
 export function showCourses() {
@@ -56,6 +81,7 @@ export function showCourses() {
     <select id="subjectAssignmentFilter" class="${sel}"><option value="">All classes / courses</option>${assignmentOptions().map(option => `<option value="${esc(option)}" ${filters.assignment === option ? "selected" : ""}>${esc(option)}</option>`).join("")}</select>
     <button onclick="addCourse()" class="${BTN}"><i class="fas fa-plus mr-1"></i>Add Subject</button>`;
   document.getElementById("content").innerHTML = tableCard({
+    id: "subjectManagementTable",
     title: `Subject Management (${filteredSubjects().length})`, tools,
     headers: ["Subject Name", "Academic Level", "Class / Semester · Course", "Monthly Fee", "Actions"],
     rows: subjectRows(filteredSubjects()) || emptyRow(5, "No subjects match.")
